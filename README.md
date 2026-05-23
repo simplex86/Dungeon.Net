@@ -2,30 +2,36 @@
 
 ``` csharp
 public class RectangularMazeGenerator
-{
-    // 同步函数
-    public RectangularDungeonField Create(int width, 
-                                          int height, 
-                                          int minRoomWidth, 
-                                          int maxRoomWidth, 
-                                          int minRoomHeight, 
-                                          int maxRoomHeight, 
-                                          int maxRoomCount, 
-                                          int mulConnector,
-                                          int tortuosity,
-                                          DungeonAlgorithm algorithm = DungeonAlgorithm.Nystroms);
-    // 异步函数
-    public async Task<RectangularDungeonField> CreateAsync(int width, 
-                                                           int height, 
-                                                           int minRoomWidth, 
-                                                           int maxRoomWidth, 
-                                                           int minRoomHeight, 
-                                                           int maxRoomHeight, 
-                                                           int maxRoomCount, 
-                                                           int mulConnector,
-                                                           int tortuosity,
-                                                           DungeonAlgorithm algorithm = DungeonAlgorithm.Nystroms);
-    }
+```
+
+## 同步函数
+
+``` csharp
+public RectangularDungeonField Create(int width, 
+                                      int height, 
+                                      int minRoomWidth, 
+                                      int maxRoomWidth, 
+                                      int minRoomHeight, 
+                                      int maxRoomHeight, 
+                                      int maxRoomCount, 
+                                      int mulConnector,
+                                      int tortuosity,
+                                      DungeonAlgorithm algorithm = DungeonAlgorithm.Nystroms)
+```
+
+## 异步函数
+
+``` csharp
+public async Task<RectangularDungeonField> CreateAsync(int width, 
+                                                       int height, 
+                                                       int minRoomWidth, 
+                                                       int maxRoomWidth, 
+                                                       int minRoomHeight, 
+                                                       int maxRoomHeight, 
+                                                       int maxRoomCount, 
+                                                       int mulConnector,
+                                                       int tortuosity,
+                                                       DungeonAlgorithm algorithm = DungeonAlgorithm.Nystroms)
 ```
 
 ### 参数
@@ -41,7 +47,7 @@ public class RectangularMazeGenerator
 - **tortuosity** 走廊曲折度
 - **algorithm** 算法
 
-### 示例
+## 示例
 
 ``` csharp
 var generator = new RectangularDungeonGenerator();
@@ -56,5 +62,7 @@ generator.Create(width,
                  tortuosity,
                  DungeonAlgorithm.Nystroms);
 ```
+
+## 效果
 
 ![迷宫](./imgs/retangular.png)
