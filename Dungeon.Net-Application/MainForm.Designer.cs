@@ -38,20 +38,22 @@ namespace Dungeon.TApplication
             // 
             rectangularDungeonControl1.Dock = DockStyle.Fill;
             rectangularDungeonControl1.Location = new Point(0, 0);
+            rectangularDungeonControl1.Margin = new Padding(8, 6, 8, 6);
             rectangularDungeonControl1.Name = "rectangularDungeonControl1";
-            rectangularDungeonControl1.Size = new Size(1478, 978);
+            rectangularDungeonControl1.Size = new Size(1558, 1024);
             rectangularDungeonControl1.TabIndex = 0;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1478, 978);
+            ClientSize = new Size(1558, 1024);
             Controls.Add(rectangularDungeonControl1);
-            MinimumSize = new Size(1276, 710);
+            Margin = new Padding(5, 4, 5, 4);
+            MinimumSize = new Size(1200, 800);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Dungeon Generator v0.1.1";
+            Text = "Dungeon Generator v0.1.2";
             ResumeLayout(false);
         }
 
