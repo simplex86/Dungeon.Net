@@ -41,7 +41,7 @@ public class RectangularMazeGenerator
 - **tortuosity** 走廊曲折度
 - **algorithm** 算法
 
-## 示例
+### 示例
 
 ``` csharp
 var generator = new RectangularDungeonGenerator();
@@ -56,7 +56,5 @@ generator.Create(width,
                  tortuosity,
                  DungeonAlgorithm.Nystroms);
 ```
-
-## 效果
 
 ![迷宫](./imgs/retangular.png)
