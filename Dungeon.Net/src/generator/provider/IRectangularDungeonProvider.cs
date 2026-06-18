@@ -65,8 +65,13 @@ namespace SimplexLab.Dungeon
     /// <summary>
     /// 异形房间，由多个重叠的矩形组合而成
     /// </summary>
-    internal struct GrotesqueRoom
+    internal class GrotesqueRoom
     {
+        /// <summary>
+        /// 异形房间之间的最小间距（墙的厚度）
+        /// </summary>
+        private const int GAP = 2;
+
         public int minx = int.MaxValue;
         public int maxx = int.MinValue;
         public int miny = int.MaxValue;
@@ -90,6 +95,11 @@ namespace SimplexLab.Dungeon
 
         public bool IsOverlapsWith(GrotesqueRoom other)
         {
+            // 包围盒预检（膨胀 GAP 格）
+            if (maxx <= other.minx - GAP || other.maxx <= minx - GAP ||
+                maxy <= other.miny - GAP || other.maxy <= miny - GAP)
+                return false;
+
             foreach (var room in other.rooms)
             {
                 if (IsOverlapsWith(room)) return true;
@@ -100,9 +110,17 @@ namespace SimplexLab.Dungeon
 
         public bool IsOverlapsWith(Room other)
         {
+            // 包围盒预检（膨胀 GAP 格）
+            if (maxx <= other.x - GAP || other.x + other.w <= minx - GAP ||
+                maxy <= other.y - GAP || other.y + other.h <= miny - GAP)
+                return false;
+
+            // 将 other 膨胀 GAP 格，检查是否与子矩形重叠
+            // 膨胀后重叠 ⟺ 原间距 < GAP，即间距 0~GAP-1 视为冲突
+            var inflated = new Room(other.x - GAP, other.y - GAP, other.w + 2 * GAP, other.h + 2 * GAP);
             foreach (var room in rooms)
             {
-                if (other.IsOverlapsWith(room)) return true;
+                if (room.IsOverlapsWith(inflated)) return true;
             }
 
             return false;

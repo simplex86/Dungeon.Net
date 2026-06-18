@@ -51,14 +51,14 @@ namespace SimplexLab.Dungeon
         /// </summary>
         /// <returns></returns>
         public RectangularDungeonField Create(int width, 
-                                     int height, 
-                                     int minRoomWidth, 
-                                     int maxRoomWidth, 
-                                     int minRoomHeight, 
-                                     int maxRoomHeight, 
-                                     int maxRoomCount, 
-                                     int mulConnector,
-                                     int tortuosity)
+                                              int height, 
+                                              int minRoomWidth, 
+                                              int maxRoomWidth, 
+                                              int minRoomHeight, 
+                                              int maxRoomHeight, 
+                                              int maxRoomCount, 
+                                              int mulConnector,
+                                              int tortuosity)
         {
             width = Utils.Odd(width);
             height = Utils.Odd(height);
