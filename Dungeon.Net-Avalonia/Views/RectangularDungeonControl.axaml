@@ -1,0 +1,81 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Dungeon.TApplication"
+             x:Class="Dungeon.TApplication.RectangularDungeonControl">
+    <DockPanel>
+        <!-- 左侧控制面板，靠左上对齐 -->
+        <DockPanel DockPanel.Dock="Left" Width="360" Margin="3,3,3,3"
+                   LastChildFill="True">
+            <!-- 参数区域，靠上排列 -->
+            <StackPanel DockPanel.Dock="Top">
+                <!-- Width -->
+                <Grid ColumnDefinitions="100,*" Margin="0,3">
+                    <TextBlock Grid.Column="0" Text="Width" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Column="1" x:Name="width" Value="0" Minimum="0" />
+                </Grid>
+                <!-- Height -->
+                <Grid ColumnDefinitions="100,*" Margin="0,3">
+                    <TextBlock Grid.Column="0" Text="Height" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Column="1" x:Name="height" Value="0" Minimum="0" />
+                </Grid>
+                <!-- Thickness -->
+                <Grid ColumnDefinitions="100,*" Margin="0,3">
+                    <TextBlock Grid.Column="0" Text="Thickness" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Column="1" x:Name="thickness" Value="5" Minimum="5" Maximum="25" />
+                </Grid>
+                <!-- Algorithm -->
+                <Grid ColumnDefinitions="100,*" Margin="0,3">
+                    <TextBlock Grid.Column="0" Text="Algorithm" VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="1" x:Name="algorithm" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Content="Nystroms" />
+                        <ComboBoxItem Content="OverlapR" />
+                    </ComboBox>
+                </Grid>
+                <!-- Room Width -->
+                <Grid ColumnDefinitions="100,*,Auto,*" Margin="0,3">
+                    <TextBlock Grid.Column="0" Text="Room Width" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Column="1" x:Name="roomMinWidth" Value="5" Minimum="3" />
+                    <TextBlock Grid.Column="2" Text=" - " VerticalAlignment="Center" Margin="2,0" />
+                    <NumericUpDown Grid.Column="3" x:Name="roomMaxWidth" Value="25" Minimum="3" />
+                </Grid>
+                <!-- Room Height -->
+                <Grid ColumnDefinitions="100,*,Auto,*" Margin="0,3">
+                    <TextBlock Grid.Column="0" Text="Room Height" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Column="1" x:Name="roomMinHeight" Value="5" Minimum="3" />
+                    <TextBlock Grid.Column="2" Text=" - " VerticalAlignment="Center" Margin="2,0" />
+                    <NumericUpDown Grid.Column="3" x:Name="roomMaxHeight" Value="25" Minimum="3" />
+                </Grid>
+                <!-- Room Count -->
+                <Grid ColumnDefinitions="100,*" Margin="0,3">
+                    <TextBlock Grid.Column="0" Text="Room Count" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Column="1" x:Name="roomCount" Value="30" Minimum="1" Maximum="1000" />
+                </Grid>
+                <!-- M-Connector -->
+                <Grid ColumnDefinitions="100,*" Margin="0,3">
+                    <TextBlock Grid.Column="0" Text="M-Connector" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Column="1" x:Name="mulconnector" Value="2" Maximum="20" />
+                </Grid>
+                <!-- Tortuosity -->
+                <Grid ColumnDefinitions="100,*" Margin="0,3">
+                    <TextBlock Grid.Column="0" Text="Tortuosity" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Column="1" x:Name="tortuosity" Value="50" />
+                </Grid>
+            </StackPanel>
+            <!-- Generate 按钮，停靠底部 -->
+            <Button x:Name="generation" Content="Generate"
+                    Click="OnGenerationClickedHandler"
+                    Background="#87CEEB"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    VerticalContentAlignment="Center"
+                    Height="65"
+                    FontSize="20"
+                    Margin="0,12,0,0" />
+        </DockPanel>
+        <!-- 右侧画布，占满剩余空间 -->
+        <Border Margin="3" Background="Black" BorderBrush="#404040" BorderThickness="1">
+            <local:DungeonCanvas x:Name="canvas" />
+        </Border>
+    </DockPanel>
+</UserControl>

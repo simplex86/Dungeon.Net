@@ -350,9 +350,8 @@ namespace SimplexLab.Dungeon
 
                 connectors.RemoveAll((pos) =>
                 {
-                    // 在原始算法中有这个判断，但是这里会造成connectors的数量锐减，导致最终索引越界
-                    // 所以这里先注释掉了
-                    // if (connector.x - pos.x < 2 || connector.y - pos.y < 2) return true;
+                    //if (connector.lateral - pos.lateral < 2 || connector.radial - pos.radial < 2)
+                    //    return true;
 
                     var sets = new HashSet<int>(connectorRegions[pos].Select((region) => merged[region]));
                     if (sets.Count > 1) return false;
