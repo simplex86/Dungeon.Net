@@ -363,6 +363,8 @@ namespace SimplexLab.Dungeon
 
                     return true;
                 });
+
+                if (connectors.Count == 0) break;
             }
         }
 

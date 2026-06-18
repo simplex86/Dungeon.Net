@@ -44,21 +44,21 @@ namespace SimplexLab.Dungeon
         /// <summary>
         /// 
         /// </summary>
-        public DungeonAlgorithm algorithm { get; } = DungeonAlgorithm.Nystroms;
+        public DungeonAlgorithm algorithm { get; } = DungeonAlgorithm.OverlapR;
 
         /// <summary>
         /// 创建地牢
         /// </summary>
         /// <returns></returns>
         public RectangularDungeonField Create(int width, 
-                                     int height, 
-                                     int minRoomWidth, 
-                                     int maxRoomWidth, 
-                                     int minRoomHeight, 
-                                     int maxRoomHeight, 
-                                     int maxRoomCount, 
-                                     int mulConnector,
-                                     int tortuosity)
+                                              int height, 
+                                              int minRoomWidth, 
+                                              int maxRoomWidth, 
+                                              int minRoomHeight, 
+                                              int maxRoomHeight, 
+                                              int maxRoomCount, 
+                                              int mulConnector,
+                                              int tortuosity)
         {
             width = Utils.Odd(width);
             height = Utils.Odd(height);
@@ -94,35 +94,102 @@ namespace SimplexLab.Dungeon
         }
 
         /// <summary>
-        /// 创建房间
+        /// 创建异形房间
+        /// 每个异形房间由多个重叠的矩形组合而成，异形房间之间互不重叠
         /// </summary>
         /// <param name="field"></param>
         private void CreateRooms(RectangularDungeonField field)
         {
+            var grotesqueRooms = new List<GrotesqueRoom>();
+
             for (var i = 0; i < maxRoomCount; i++)
             {
-                CreateRoom(field);
-                StartRegion();
+                if (TryCreateGrotesqueRoom(field, grotesqueRooms, out var grotesqueRoom))
+                {
+                    grotesqueRooms.Add(grotesqueRoom);
+
+                    StartRegion();
+                    foreach (var room in grotesqueRoom.rooms)
+                    {
+                        CarveRoom(field, room);
+                    }
+                }
             }
         }
 
         /// <summary>
-        /// 
+        /// 尝试创建一个异形房间
+        /// 先生成基础矩形，再添加1-3个与已有子矩形重叠的额外矩形
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="rooms"></param>
-        /// <param name="room"></param>
-        /// <returns></returns>
-        private void CreateRoom(RectangularDungeonField field)
+        private bool TryCreateGrotesqueRoom(RectangularDungeonField field, List<GrotesqueRoom> existingRooms, out GrotesqueRoom grotesqueRoom)
         {
-            var w = Utils.Odd(random.Next(minRoomWidth, maxRoomWidth + 1));
-            var h = Utils.Odd(random.Next(minRoomHeight, maxRoomHeight + 1));
-            var x = Utils.Odd(random.Next(1, field.width - w));
-            var y = Utils.Odd(random.Next(1, field.height - h));
+            var times = 5;
 
-            var room = new Room(x, y, w, h);
-            CarveRoom(field, room);
+            while (times > 0)
+            {
+                times--;
+
+                grotesqueRoom = new GrotesqueRoom();
+
+                // 生成基础矩形
+                var w = Utils.Odd(random.Next(minRoomWidth, maxRoomWidth + 1));
+                var h = Utils.Odd(random.Next(minRoomHeight, maxRoomHeight + 1));
+                var x = Utils.Odd(random.Next(1, field.width - w));
+                var y = Utils.Odd(random.Next(1, field.height - h));
+
+                grotesqueRoom.Add(new Room(x, y, w, h));
+
+                // 尝试添加1-3个与已有子矩形重叠的额外矩形
+                var extraCount = random.Next(1, 4);
+                for (var j = 0; j < extraCount; j++)
+                {
+                    TryAddOverlappingRect(field, grotesqueRoom);
+                }
+
+                // 检查与已有异形房间是否重叠
+                var overlaps = false;
+                foreach (var other in existingRooms)
+                {
+                    if (grotesqueRoom.IsOverlapsWith(other))
+                    {
+                        overlaps = true;
+                        break;
+                    }
+                }
+
+                if (!overlaps) return true;
+            }
+
+            grotesqueRoom = new GrotesqueRoom();
+            return false;
+        }
+
+        /// <summary>
+        /// 尝试向异形房间中添加一个与已有子矩形重叠的新矩形
+        /// </summary>
+        private void TryAddOverlappingRect(RectangularDungeonField field, GrotesqueRoom grotesqueRoom)
+        {
+            // 从已有子矩形中随机选一个作为锚点
+            var anchor = grotesqueRoom.rooms[random.Next(0, grotesqueRoom.rooms.Count)];
+
+            var nw = Utils.Odd(random.Next(minRoomWidth, maxRoomWidth + 1));
+            var nh = Utils.Odd(random.Next(minRoomHeight, maxRoomHeight + 1));
+
+            // 计算确保与锚点重叠的位置范围
+            // 重叠条件: Math.Max(nx, anchor.x) < Math.Min(nx + nw, anchor.x + anchor.w)
+            // 即: anchor.x - nw + 1 <= nx <= anchor.x + anchor.w - 1
+            // 同时需要在场地范围内: 1 <= nx <= field.width - nw - 1
+            var nxMin = Math.Max(1, anchor.x - nw + 1);
+            var nxMax = Math.Min(field.width - nw - 1, anchor.x + anchor.w - 1);
+            var nyMin = Math.Max(1, anchor.y - nh + 1);
+            var nyMax = Math.Min(field.height - nh - 1, anchor.y + anchor.h - 1);
+
+            if (nxMin > nxMax || nyMin > nyMax) return;
+
+            var nx = Utils.Odd(random.Next(nxMin, nxMax + 1));
+            var ny = Utils.Odd(random.Next(nyMin, nyMax + 1));
+
+            grotesqueRoom.Add(new Room(nx, ny, nw, nh));
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace SimplexLab.Dungeon
@@ -63,16 +63,16 @@ namespace SimplexLab.Dungeon
     }
 
     /// <summary>
-    /// 
+    /// 异形房间，由多个重叠的矩形组合而成
     /// </summary>
     internal struct GrotesqueRoom
     {
         public int minx = int.MaxValue;
         public int maxx = int.MinValue;
         public int miny = int.MaxValue;
-        public int maxy = int.MaxValue;
+        public int maxy = int.MinValue;
 
-        public List<Room> rooms = new List<Room>();        
+        public List<Room> rooms = new List<Room>();
 
         public GrotesqueRoom()
         {
@@ -82,6 +82,10 @@ namespace SimplexLab.Dungeon
         public void Add(Room room)
         {
             rooms.Add(room);
+            minx = Math.Min(minx, room.x);
+            maxx = Math.Max(maxx, room.x + room.w);
+            miny = Math.Min(miny, room.y);
+            maxy = Math.Max(maxy, room.y + room.h);
         }
 
         public bool IsOverlapsWith(GrotesqueRoom other)
