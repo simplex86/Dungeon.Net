@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Dungeon.TApplication"
+             x:Class="Dungeon.TApplication.ReconstructionControl">
+    <DockPanel>
+        <!-- 第一行：文件选择区域，停靠顶部 -->
+        <Grid ColumnDefinitions="100,*,Auto" DockPanel.Dock="Top" Margin="3,3,3,3">
+            <TextBlock Grid.Column="0" Text="Selection" VerticalAlignment="Center" />
+            <TextBox Grid.Column="1" x:Name="filePath" IsReadOnly="True" Margin="3,0" />
+            <Button Grid.Column="2" x:Name="browse" Content="..."
+                    Click="OnBrowseClickedHandler"
+                    Width="40" VerticalAlignment="Stretch" />
+        </Grid>
+        <!-- 第二行：左侧参数 + 右侧画布 -->
+        <DockPanel>
+            <!-- 左侧参数面板，与 Generation 页宽度一致 -->
+            <DockPanel DockPanel.Dock="Left" Width="360" Margin="3,3,3,3"
+                       LastChildFill="True">
+                <StackPanel DockPanel.Dock="Top">
+                    <!-- Width（只读） -->
+                    <Grid ColumnDefinitions="100,*" Margin="0,3">
+                        <TextBlock Grid.Column="0" Text="Width" VerticalAlignment="Center" />
+                        <NumericUpDown Grid.Column="1" x:Name="width" IsEnabled="False" Value="0" Minimum="0" />
+                    </Grid>
+                    <!-- Height（只读） -->
+                    <Grid ColumnDefinitions="100,*" Margin="0,3">
+                        <TextBlock Grid.Column="0" Text="Height" VerticalAlignment="Center" />
+                        <NumericUpDown Grid.Column="1" x:Name="height" IsEnabled="False" Value="0" Minimum="0" />
+                    </Grid>
+                </StackPanel>
+            </DockPanel>
+            <!-- 右侧画布，占满剩余空间 -->
+            <Border Margin="3" Background="Black" BorderBrush="#404040" BorderThickness="1">
+                <local:DungeonCanvas x:Name="canvas" />
+            </Border>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

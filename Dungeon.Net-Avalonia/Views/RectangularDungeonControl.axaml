@@ -61,17 +61,30 @@
                     <NumericUpDown Grid.Column="1" x:Name="tortuosity" Value="50" />
                 </Grid>
             </StackPanel>
-            <!-- Generate 按钮，停靠底部 -->
-            <Button x:Name="generation" Content="Generate"
-                    Click="OnGenerationClickedHandler"
-                    Background="#87CEEB"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    VerticalContentAlignment="Center"
-                    Height="65"
-                    FontSize="20"
-                    Margin="0,12,0,0" />
+            <!-- 按钮区域，停靠底部 -->
+            <Grid ColumnDefinitions="*,*" DockPanel.Dock="Bottom"
+                  VerticalAlignment="Bottom"
+                  Margin="0,12,0,0"
+                  Height="65">
+                <Button x:Name="generation" Content="Generate"
+                        Click="OnGenerationClickedHandler"
+                        Background="#87CEEB"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Center"
+                        FontSize="20"
+                        Margin="0,0,3,0" />
+                <Button Grid.Column="1" x:Name="save" Content="Save"
+                        Click="OnSaveClickedHandler"
+                        Background="#90EE90"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Center"
+                        FontSize="20"
+                        Margin="3,0,0,0" />
+            </Grid>
         </DockPanel>
         <!-- 右侧画布，占满剩余空间 -->
         <Border Margin="3" Background="Black" BorderBrush="#404040" BorderThickness="1">

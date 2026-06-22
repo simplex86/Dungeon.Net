@@ -13,7 +13,7 @@ namespace Dungeon.TApplication
     {
         private double width = 0;
         private double height = 0;
-        private int thickness = 1;
+        private double thickness = 1;
         private int offsetx = 0;
         private int offsety = 0;
 
@@ -37,7 +37,7 @@ namespace Dungeon.TApplication
         /// </summary>
         /// <param name="thickness"></param>
         /// <returns></returns>
-        public RectangularDungeonRenderer SetThickness(int thickness)
+        public RectangularDungeonRenderer SetThickness(double thickness)
         {
             this.thickness = thickness;
             return this;
@@ -78,8 +78,8 @@ namespace Dungeon.TApplication
                 return;
             }
 
-            var cx = (int)Math.Round((width - field.Width * thickness) / 2) + offsetx;
-            var cy = (int)Math.Round((height - field.Height * thickness) / 2) + offsety;
+            var cx = (width - field.Width * thickness) / 2 + offsetx;
+            var cy = (height - field.Height * thickness) / 2 + offsety;
 
             for (int y = 0; y < field.Height; y++)
             {
@@ -105,7 +105,7 @@ namespace Dungeon.TApplication
         /// <param name="context"></param>
         /// <param name="gx"></param>
         /// <param name="gy"></param>
-        private void DrawPath(DrawingContext context, int gx, int gy)
+        private void DrawPath(DrawingContext context, double gx, double gy)
         {
             context.DrawRectangle(PathBrush, null, new Rect(gx, gy, thickness, thickness));
         }

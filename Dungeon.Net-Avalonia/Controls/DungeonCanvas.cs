@@ -13,7 +13,7 @@ namespace Dungeon.TApplication
     public class DungeonCanvas : Control
     {
         private RectangularDungeonField field;
-        private int thickness = 5;
+        private double thickness = 5;
         private int offsetx = 0;
         private int offsety = 0;
         private RectangularDungeonRenderer renderer = new RectangularDungeonRenderer();
@@ -34,7 +34,7 @@ namespace Dungeon.TApplication
         /// <summary>
         /// 格子厚度
         /// </summary>
-        public int Thickness
+        public double Thickness
         {
             get => thickness;
             set

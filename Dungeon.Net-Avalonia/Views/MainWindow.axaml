@@ -2,9 +2,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Dungeon.TApplication"
         x:Class="Dungeon.TApplication.MainWindow"
-        Title="Dungeon Generator v0.1.1"
+        Title="Dungeon Generator v0.3.9"
         Width="1478" Height="978"
         MinWidth="1276" MinHeight="710"
         WindowStartupLocation="CenterScreen">
-    <local:RectangularDungeonControl />
+    <TabControl>
+        <TabItem Header="Generation">
+            <local:RectangularDungeonControl />
+        </TabItem>
+        <TabItem Header="Reconstruction">
+            <local:ReconstructionControl />
+        </TabItem>
+    </TabControl>
 </Window>

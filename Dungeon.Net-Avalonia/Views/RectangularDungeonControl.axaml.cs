@@ -1,6 +1,8 @@
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using SimplexLab.Dungeon;
 
 namespace Dungeon.TApplication
@@ -8,7 +10,7 @@ namespace Dungeon.TApplication
     public partial class RectangularDungeonControl : UserControl
     {
         private RectangularDungeonGenerator generator = new RectangularDungeonGenerator();
-        private RectangularDungeonField field;
+        private RectangularDungeonField? field;
         private bool generating = false;
 
         public RectangularDungeonControl()
@@ -57,7 +59,7 @@ namespace Dungeon.TApplication
 
             field = await generator.CreateAsync(w, h, minw, maxw, minh, maxh, cnt, mct, tor, alm);
             canvas.Thickness = t;
-            canvas.Field = field;
+            canvas.Field = field.Value;
 
             generating = false;
         }
@@ -68,6 +70,36 @@ namespace Dungeon.TApplication
 
             generation.Content = "Generate";
             generation.IsEnabled = true;
+        }
+
+        private async void OnSaveClickedHandler(object sender, RoutedEventArgs e)
+        {
+            if (field == null) return;
+
+            var topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
+
+            var storageProvider = topLevel.StorageProvider;
+            var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+            {
+                Title = "Save Dungeon",
+                SuggestedFileName = "dungeon",
+                FileTypeChoices = new[]
+                {
+                    new FilePickerFileType("Dungeon File")
+                    {
+                        Patterns = new[] { "*.dungeon" }
+                    }
+                }
+            });
+
+            if (file == null) return;
+
+            using var stream = await file.OpenWriteAsync();
+            using var memoryStream = new MemoryStream();
+            var writer = new DungeonWriter();
+            writer.Write(field.Value, memoryStream);
+            memoryStream.WriteTo(stream);
         }
     }
 }
