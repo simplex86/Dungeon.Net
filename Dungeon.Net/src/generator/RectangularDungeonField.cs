@@ -8,26 +8,26 @@ namespace SimplexLab.Dungeon
         /// <summary>
         /// 迷宫场地的数据
         /// </summary>
-        private int[] field = null;
+        internal int[] Field = null;
 
         /// <summary>
         /// 宽度
         /// </summary>
-        public int width  { get; private set; } = 9;
+        public int Width  { get; private set; } = 9;
         /// <summary>
         /// 高度
         /// </summary>
-        public int height { get; private set; } = 9;
+        public int Height { get; private set; } = 9;
 
         public RectangularDungeonField(int w, int h)
         {
-            width  = Utils.Odd(w);
-            height = Utils.Odd(h);
+            Width  = Utils.Odd(w);
+            Height = Utils.Odd(h);
             
-            field = new int[width * height];
-            for (int i=0; i<field.Length; i++)
+            Field = new int[Width * Height];
+            for (int i=0; i<Field.Length; i++)
             {
-                field[i] = TileType.Wall;
+                Field[i] = TileType.Wall;
             }
         }
 
@@ -39,8 +39,8 @@ namespace SimplexLab.Dungeon
         /// <returns></returns>
         public int this[int x, int y]
         {
-            get { return field[y * width + x]; }
-            internal set { field[y * width + x] = value; }
+            get { return Field[y * Width + x]; }
+            internal set { Field[y * Width + x] = value; }
         }
     }
 }

@@ -132,8 +132,8 @@ namespace SimplexLab.Dungeon
                 // 生成基础矩形
                 var w = Utils.Odd(random.Next(minRoomWidth, maxRoomWidth + 1));
                 var h = Utils.Odd(random.Next(minRoomHeight, maxRoomHeight + 1));
-                var x = Utils.Odd(random.Next(1, field.width - w));
-                var y = Utils.Odd(random.Next(1, field.height - h));
+                var x = Utils.Odd(random.Next(1, field.Width - w));
+                var y = Utils.Odd(random.Next(1, field.Height - h));
 
                 var baseRoom = new Room(x, y, w, h);
 
@@ -184,9 +184,9 @@ namespace SimplexLab.Dungeon
             // 即: anchor.x - nw + 1 <= nx <= anchor.x + anchor.w - 1
             // 同时需要在场地范围内: 1 <= nx <= field.width - nw - 1
             var nxMin = Math.Max(1, anchor.x - nw + 1);
-            var nxMax = Math.Min(field.width - nw - 1, anchor.x + anchor.w - 1);
+            var nxMax = Math.Min(field.Width - nw - 1, anchor.x + anchor.w - 1);
             var nyMin = Math.Max(1, anchor.y - nh + 1);
-            var nyMax = Math.Min(field.height - nh - 1, anchor.y + anchor.h - 1);
+            var nyMax = Math.Min(field.Height - nh - 1, anchor.y + anchor.h - 1);
 
             if (nxMin > nxMax || nyMin > nyMax) return;
 
@@ -227,9 +227,9 @@ namespace SimplexLab.Dungeon
         /// <param name="field"></param>
         private void CreateMaze(RectangularDungeonField field)
         {
-            for (var y = 1; y < field.height; y += 2)
+            for (var y = 1; y < field.Height; y += 2)
             {
-                for (var x = 1; x < field.width; x += 2)
+                for (var x = 1; x < field.Width; x += 2)
                 {
                     if (!Utils.IsWall(field, x, y)) continue;
                     GrowMaze(field, x, y);
@@ -307,8 +307,8 @@ namespace SimplexLab.Dungeon
         private bool CanCarve(in RectangularDungeonField field, Tile tile, Vector dir)
         {
             var a = Find(tile, dir, 3);
-            if (a.lateral < 0 || a.lateral >= field.width ||
-                a.radial < 0 || a.radial >= field.height)
+            if (a.lateral < 0 || a.lateral >= field.Width ||
+                a.radial < 0 || a.radial >= field.Height)
             {
                 return false;
             }
@@ -348,9 +348,9 @@ namespace SimplexLab.Dungeon
         {
             var connectorRegions = new Dictionary<Tile, HashSet<int>>();
 
-            for (var y = 1; y < field.height - 1; y++)
+            for (var y = 1; y < field.Height - 1; y++)
             {
-                for (var x = 1; x < field.width - 1; x++)
+                for (var x = 1; x < field.Width - 1; x++)
                 {
                     var pos = new Tile(x, y);
                     if (!Utils.IsWall(field, x, y)) continue;
@@ -444,9 +444,9 @@ namespace SimplexLab.Dungeon
             {
                 done = true;
 
-                for (var y = 1; y < field.height-1; y++)
+                for (var y = 1; y < field.Height-1; y++)
                 {
-                    for (var x = 1; x <field.width-1; x++)
+                    for (var x = 1; x <field.Width-1; x++)
                     {
                         Tile pos = new Tile(x, y);
                         if (Utils.IsWall(field, x, y)) continue;

@@ -80,19 +80,19 @@ namespace Dungeon.TApplication
         /// <param name="field"></param>
         private void DrawField(Graphics grap, RectangularDungeonField field)
         {
-            if (field.width == 0 || field.height == 0)
+            if (field.Width == 0 || field.Height == 0)
             {
                 return;
             }
 
             var ht = thickness / 2;
-            var cx = (width  - field.width  * thickness) / 2 + offsetx;
-            var cy = (height - field.height * thickness) / 2 + offsety;
+            var cx = (width  - field.Width  * thickness) / 2 + offsetx;
+            var cy = (height - field.Height * thickness) / 2 + offsety;
 
-            for (int y = 0; y < field.height; y++)
+            for (int y = 0; y < field.Height; y++)
             {
                 var gy = cy + y * thickness + ht;
-                for (int x = 0; x < field.width; x++)
+                for (int x = 0; x < field.Width; x++)
                 {
                     var gx = cx + x * thickness + ht;
                     switch (field[x, y])

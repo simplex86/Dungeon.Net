@@ -103,7 +103,7 @@ namespace SimplexLab.Dungeon
 
             for (var i = 0; i < maxRoomCount; i++)
             {
-                if (TryCreateRoom(field.width, field.height, rooms, out var room))
+                if (TryCreateRoom(field.Width, field.Height, rooms, out var room))
                 {
                     rooms.Add(room);
 
@@ -175,9 +175,9 @@ namespace SimplexLab.Dungeon
         /// <param name="field"></param>
         private void CreateMaze(RectangularDungeonField field)
         {
-            for (var y = 1; y < field.height; y += 2)
+            for (var y = 1; y < field.Height; y += 2)
             {
-                for (var x = 1; x < field.width; x += 2)
+                for (var x = 1; x < field.Width; x += 2)
                 {
                     if (!Utils.IsWall(field, x, y)) continue;
                     GrowMaze(field, x, y);
@@ -255,8 +255,8 @@ namespace SimplexLab.Dungeon
         private bool CanCarve(in RectangularDungeonField field, Tile tile, Vector dir)
         {
             var a = Find(tile, dir, 3);
-            if (a.lateral < 0 || a.lateral >= field.width ||
-                a.radial < 0 || a.radial >= field.height)
+            if (a.lateral < 0 || a.lateral >= field.Width ||
+                a.radial < 0 || a.radial >= field.Height)
             {
                 return false;
             }
@@ -296,9 +296,9 @@ namespace SimplexLab.Dungeon
         {
             var connectorRegions = new Dictionary<Tile, HashSet<int>>();
 
-            for (var y = 1; y < field.height - 1; y++)
+            for (var y = 1; y < field.Height - 1; y++)
             {
-                for (var x = 1; x < field.width - 1; x++)
+                for (var x = 1; x < field.Width - 1; x++)
                 {
                     var pos = new Tile(x, y);
                     if (!Utils.IsWall(field, x, y)) continue;
@@ -391,9 +391,9 @@ namespace SimplexLab.Dungeon
             {
                 done = true;
 
-                for (var y = 1; y < field.height-1; y++)
+                for (var y = 1; y < field.Height-1; y++)
                 {
-                    for (var x = 1; x <field.width-1; x++)
+                    for (var x = 1; x <field.Width-1; x++)
                     {
                         Tile pos = new Tile(x, y);
                         if (Utils.IsWall(field, x, y)) continue;
