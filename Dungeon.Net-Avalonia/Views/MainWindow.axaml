@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Dungeon.TApplication"
         x:Class="Dungeon.TApplication.MainWindow"
-        Title="Dungeon Generator v0.3.9"
+        Title="Dungeon Generator v0.3.14"
         Width="1478" Height="978"
         MinWidth="1276" MinHeight="710"
         WindowStartupLocation="CenterScreen">
